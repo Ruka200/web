@@ -1,7 +1,11 @@
 import React from 'react';
 import { Package, Star, Shield, Clock, Users, ArrowRight, CheckCircle, Award, TrendingUp } from 'lucide-react';
 
-export const MaterialsPage: React.FC = () => {
+interface MaterialsPageProps {
+  onSignUp: () => void;
+}
+
+export const MaterialsPage: React.FC<MaterialsPageProps> = ({ onSignUp }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -293,7 +297,10 @@ export const MaterialsPage: React.FC = () => {
           </p>
           
           <div className="space-y-4">
-            <button className="bg-white text-blue-600 px-12 py-4 rounded-xl text-lg font-bold hover:bg-gray-100 transition-colors shadow-lg flex items-center mx-auto">
+            <button 
+              onClick={onSignUp}
+              className="bg-white text-blue-600 px-12 py-4 rounded-xl text-lg font-bold hover:bg-gray-100 transition-colors shadow-lg flex items-center mx-auto"
+            >
               <Package className="mr-3 w-6 h-6" />
               Register as Material Supplier
               <ArrowRight className="ml-3 w-6 h-6" />

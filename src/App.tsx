@@ -10,26 +10,32 @@ import { ConfirmationPage } from './components/ConfirmationPage';
 import { UserDashboard } from './components/UserDashboard';
 import { VehicleDetails } from './components/VehicleDetails';
 import { ProfilePage } from './components/ProfilePage';
+import { PartnerDashboard } from './components/PartnerDashboard';
+import { AuthModal } from './components/AuthModal';
 import { Footer } from './components/Footer';
-import { User, Vehicle } from './types';
+import { User, Vehicle, Partner } from './types';
 import { vehicles } from './data/services';
 
-type ViewType = 'home' | 'vehicles' | 'materials' | 'about' | 'contact' | 'signup' | 'confirmation' | 'dashboard' | 'vehicle-details' | 'profile';
+type ViewType = 'home' | 'vehicles' | 'materials' | 'about' | 'contact' | 'signup' | 'confirmation' | 'dashboard' | 'vehicle-details' | 'profile' | 'partner-dashboard';
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewType>('home');
   const [user, setUser] = useState<User | null>(null);
+  const [partner, setPartner] = useState<Partner | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [registrationData, setRegistrationData] = useState<any>(null);
 
   const handleLogin = (userData: User) => {
     setUser(userData);
+    setIsAuthModalOpen(false);
     setCurrentView('dashboard');
   };
 
   const handleLogout = () => {
     setUser(null);
+    setPartner(null);
     setCurrentView('home');
     setIsMenuOpen(false);
   };
@@ -39,6 +45,13 @@ function App() {
     setIsMenuOpen(false);
   };
 
+  const handleShowLogin = () => {
+    setIsAuthModalOpen(true);
+  };
+
+  const handleShowSignUp = () => {
+    setCurrentView('signup');
+  };
   const handleRegistration = (data: any) => {
     setRegistrationData(data);
     setCurrentView('confirmation');
@@ -58,7 +71,47 @@ function App() {
         isAuthenticated: true
       };
       setUser(newUser);
-      setCurrentView('dashboard');
+      
+      // Navigate to appropriate dashboard based on role
+      if (registrationData.role === 'vehicle_owner' || registrationData.role === 'material_supplier') {
+        // Create partner data for business users
+        const newPartner: Partner = {
+          id: Date.now().toString(),
+          type: registrationData.role,
+          businessName: registrationData.businessName || '',
+          ownerName: registrationData.name,
+          email: registrationData.email,
+          phone: registrationData.phone,
+          address: registrationData.address || '',
+          district: registrationData.district || '',
+          businessLicense: '',
+          brNumber: '',
+          yearsInBusiness: 0,
+          description: '',
+          services: [],
+          certifications: [],
+          insuranceDetails: {
+            provider: '',
+            policyNumber: '',
+            expiryDate: ''
+          },
+          documents: {
+            businessLicense: null,
+            insurance: null,
+            brCertificate: null,
+            vehiclePhotos: []
+          },
+          status: 'pending',
+          registrationDate: new Date().toISOString(),
+          rating: 0,
+          totalJobs: 0,
+          notifications: []
+        };
+        setPartner(newPartner);
+        setCurrentView('partner-dashboard');
+      } else {
+        setCurrentView('dashboard');
+      }
     }
     setRegistrationData(null);
   };
@@ -77,9 +130,9 @@ function App() {
   const renderCurrentView = () => {
     switch (currentView) {
       case 'vehicles':
-        return <VehiclesPage />;
+        return <VehiclesPage onSignUp={handleShowSignUp} />;
       case 'materials':
-        return <MaterialsPage />;
+        return <MaterialsPage onSignUp={handleShowSignUp} />;
       case 'about':
         return <AboutPage />;
       case 'contact':
@@ -90,13 +143,15 @@ function App() {
         return <ConfirmationPage onAction={handleConfirmationAction} registrationData={registrationData} />;
       case 'dashboard':
         return user ? <UserDashboard user={user} onVehicleSelect={handleVehicleSelect} /> : <HomePage />;
+      case 'partner-dashboard':
+        return partner ? <PartnerDashboard partner={partner} /> : <HomePage onLogin={handleShowLogin} onSignUp={handleShowSignUp} />;
       case 'vehicle-details':
         return selectedVehicle ? (
           <VehicleDetails 
             vehicle={selectedVehicle} 
             onBack={() => setCurrentView('dashboard')} 
           />
-        ) : <HomePage />;
+        ) : <HomePage onLogin={handleShowLogin} onSignUp={handleShowSignUp} />;
       case 'profile':
         return user ? (
           <ProfilePage 
@@ -104,9 +159,9 @@ function App() {
             onUpdateProfile={handleUpdateProfile}
             onBack={() => setCurrentView('dashboard')}
           />
-        ) : <HomePage />;
+        ) : <HomePage onLogin={handleShowLogin} onSignUp={handleShowSignUp} />;
       default:
-        return <HomePage />;
+        return <HomePage onLogin={handleShowLogin} onSignUp={handleShowSignUp} />;
     }
   };
 
@@ -120,10 +175,17 @@ function App() {
         isMenuOpen={isMenuOpen}
         currentView={currentView}
         onNavigate={handleNavigation}
+        onShowLogin={handleShowLogin}
+        onShowSignUp={handleShowSignUp}
       />
 
       {renderCurrentView()}
 
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onLogin={handleLogin}
+      />
       <Footer onNavigate={handleNavigation} />
     </div>
   );

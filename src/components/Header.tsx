@@ -13,6 +13,8 @@ interface HeaderProps {
   isMenuOpen: boolean;
   currentView: ViewType;
   onNavigate: (view: ViewType) => void;
+  onShowLogin: () => void;
+  onShowSignUp: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ 
@@ -22,9 +24,10 @@ export const Header: React.FC<HeaderProps> = ({
   onMenuClick, 
   isMenuOpen, 
   currentView, 
-  onNavigate 
+  onNavigate,
+  onShowLogin,
+  onShowSignUp
 }) => {
-  const [isAuthModalOpen, setIsAuthModalOpen] = React.useState(false);
 
   const navItems = [
     { id: 'home', label: 'Home' },
@@ -43,7 +46,6 @@ export const Header: React.FC<HeaderProps> = ({
 
   const handleLogin = (userData: UserType) => {
     onLogin(userData);
-    setIsAuthModalOpen(false);
   };
 
   const handleLogout = () => {
@@ -150,13 +152,13 @@ export const Header: React.FC<HeaderProps> = ({
               ) : (
                 <div className="flex items-center space-x-4">
                   <button
-                    onClick={() => setIsAuthModalOpen(true)}
+                    onClick={onShowLogin}
                     className="text-gray-700 hover:text-yellow-600 transition-colors font-medium"
                   >
                     Log In
                   </button>
                 <button
-                    onClick={() => onNavigate('signup')}
+                    onClick={onShowSignUp}
                   className="flex items-center space-x-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-3 rounded-xl hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"
                 >
                     <span>Sign Up</span>
@@ -201,11 +203,6 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         )}
 
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-        onLogin={handleLogin}
-      />
       </header>
     </>
   );
