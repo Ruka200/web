@@ -3,9 +3,15 @@ import { User, Truck, Package, ArrowRight, CheckCircle } from 'lucide-react';
 
 interface SignUpPageProps {
   onRegistration: (data: any) => void;
+  onVehicleOwnerSignUp: () => void;
+  onMaterialSupplierSignUp: () => void;
 }
 
-export const SignUpPage: React.FC<SignUpPageProps> = ({ onRegistration }) => {
+export const SignUpPage: React.FC<SignUpPageProps> = ({ 
+  onRegistration, 
+  onVehicleOwnerSignUp, 
+  onMaterialSupplierSignUp 
+}) => {
   const [selectedRole, setSelectedRole] = useState<string>('');
   const [formData, setFormData] = useState({
     name: '',
@@ -101,7 +107,7 @@ export const SignUpPage: React.FC<SignUpPageProps> = ({ onRegistration }) => {
 
             {/* Vehicle Owner */}
             <div
-              onClick={() => setSelectedRole('vehicle_owner')}
+              onClick={onVehicleOwnerSignUp}
               className="group bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-3xl p-8 border border-yellow-200 hover:shadow-2xl transition-all duration-500 cursor-pointer"
             >
               <div className="text-center">
@@ -137,7 +143,7 @@ export const SignUpPage: React.FC<SignUpPageProps> = ({ onRegistration }) => {
 
             {/* Material Supplier */}
             <div
-              onClick={() => setSelectedRole('material_supplier')}
+              onClick={onMaterialSupplierSignUp}
               className="group bg-gradient-to-br from-green-50 to-green-100 rounded-3xl p-8 border border-green-200 hover:shadow-2xl transition-all duration-500 cursor-pointer"
             >
               <div className="text-center">
