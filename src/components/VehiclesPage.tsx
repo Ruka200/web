@@ -3,9 +3,10 @@ import { Truck, Star, Shield, Clock, Users, ArrowRight, CheckCircle, Award, Tren
 
 interface VehiclesPageProps {
   onSignUp: () => void;
+  onVehicleOwnerSignUp: () => void;
 }
 
-export const VehiclesPage: React.FC<VehiclesPageProps> = ({ onSignUp }) => {
+export const VehiclesPage: React.FC<VehiclesPageProps> = ({ onSignUp, onVehicleOwnerSignUp }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -273,7 +274,7 @@ export const VehiclesPage: React.FC<VehiclesPageProps> = ({ onSignUp }) => {
           
           <div className="space-y-4">
             <button 
-              onClick={onSignUp}
+              onClick={onVehicleOwnerSignUp}
               className="bg-black text-yellow-400 px-12 py-4 rounded-xl text-lg font-bold hover:bg-gray-800 transition-colors shadow-lg flex items-center mx-auto"
             >
               <Truck className="mr-3 w-6 h-6" />

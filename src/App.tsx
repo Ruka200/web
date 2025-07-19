@@ -11,6 +11,8 @@ import { UserDashboard } from './components/UserDashboard';
 import { VehicleDetails } from './components/VehicleDetails';
 import { ProfilePage } from './components/ProfilePage';
 import { PartnerDashboard } from './components/PartnerDashboard';
+import { VehicleOwnerRegistration } from './components/VehicleOwnerRegistration';
+import { MaterialSupplierRegistration } from './components/MaterialSupplierRegistration';
 import { AuthModal } from './components/AuthModal';
 import { Footer } from './components/Footer';
 import { User, Vehicle, Partner } from './types';
@@ -26,6 +28,8 @@ function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [registrationData, setRegistrationData] = useState<any>(null);
+  const [isVehicleRegistrationOpen, setIsVehicleRegistrationOpen] = useState(false);
+  const [isMaterialRegistrationOpen, setIsMaterialRegistrationOpen] = useState(false);
 
   const handleLogin = (userData: User) => {
     setUser(userData);
@@ -52,6 +56,15 @@ function App() {
   const handleShowSignUp = () => {
     setCurrentView('signup');
   };
+
+  const handleShowVehicleRegistration = () => {
+    setIsVehicleRegistrationOpen(true);
+  };
+
+  const handleShowMaterialRegistration = () => {
+    setIsMaterialRegistrationOpen(true);
+  };
+
   const handleRegistration = (data: any) => {
     setRegistrationData(data);
     setCurrentView('confirmation');
@@ -116,6 +129,18 @@ function App() {
     setRegistrationData(null);
   };
 
+  const handleVehicleOwnerRegistration = (data: any) => {
+    setRegistrationData(data);
+    setIsVehicleRegistrationOpen(false);
+    setCurrentView('confirmation');
+  };
+
+  const handleMaterialSupplierRegistration = (data: any) => {
+    setRegistrationData(data);
+    setIsMaterialRegistrationOpen(false);
+    setCurrentView('confirmation');
+  };
+
   const handleVehicleSelect = (vehicle: Vehicle) => {
     setSelectedVehicle(vehicle);
     setCurrentView('vehicle-details');
@@ -130,15 +155,21 @@ function App() {
   const renderCurrentView = () => {
     switch (currentView) {
       case 'vehicles':
-        return <VehiclesPage onSignUp={handleShowSignUp} />;
+        return <VehiclesPage onSignUp={handleShowSignUp} onVehicleOwnerSignUp={handleShowVehicleRegistration} />;
       case 'materials':
-        return <MaterialsPage onSignUp={handleShowSignUp} />;
+        return <MaterialsPage onSignUp={handleShowSignUp} onMaterialSupplierSignUp={handleShowMaterialRegistration} />;
       case 'about':
         return <AboutPage />;
       case 'contact':
         return <ContactPage />;
       case 'signup':
-        return <SignUpPage onRegistration={handleRegistration} />;
+        return (
+          <SignUpPage 
+            onRegistration={handleRegistration}
+            onVehicleOwnerSignUp={handleShowVehicleRegistration}
+            onMaterialSupplierSignUp={handleShowMaterialRegistration}
+          />
+        );
       case 'confirmation':
         return <ConfirmationPage onAction={handleConfirmationAction} registrationData={registrationData} />;
       case 'dashboard':
@@ -186,6 +217,19 @@ function App() {
         onClose={() => setIsAuthModalOpen(false)}
         onLogin={handleLogin}
       />
+      
+      <VehicleOwnerRegistration
+        isOpen={isVehicleRegistrationOpen}
+        onClose={() => setIsVehicleRegistrationOpen(false)}
+        onSubmit={handleVehicleOwnerRegistration}
+      />
+      
+      <MaterialSupplierRegistration
+        isOpen={isMaterialRegistrationOpen}
+        onClose={() => setIsMaterialRegistrationOpen(false)}
+        onSubmit={handleMaterialSupplierRegistration}
+      />
+      
       <Footer onNavigate={handleNavigation} />
     </div>
   );

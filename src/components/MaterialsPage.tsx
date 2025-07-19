@@ -3,9 +3,10 @@ import { Package, Star, Shield, Clock, Users, ArrowRight, CheckCircle, Award, Tr
 
 interface MaterialsPageProps {
   onSignUp: () => void;
+  onMaterialSupplierSignUp: () => void;
 }
 
-export const MaterialsPage: React.FC<MaterialsPageProps> = ({ onSignUp }) => {
+export const MaterialsPage: React.FC<MaterialsPageProps> = ({ onSignUp, onMaterialSupplierSignUp }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -298,7 +299,7 @@ export const MaterialsPage: React.FC<MaterialsPageProps> = ({ onSignUp }) => {
           
           <div className="space-y-4">
             <button 
-              onClick={onSignUp}
+              onClick={onMaterialSupplierSignUp}
               className="bg-white text-blue-600 px-12 py-4 rounded-xl text-lg font-bold hover:bg-gray-100 transition-colors shadow-lg flex items-center mx-auto"
             >
               <Package className="mr-3 w-6 h-6" />
