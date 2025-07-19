@@ -40,11 +40,17 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-              <button className="group bg-yellow-400 text-black px-10 py-4 rounded-xl text-lg font-bold hover:bg-yellow-500 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center">
+              <button 
+                onClick={() => handleRestrictedAccess()}
+                className="group bg-yellow-400 text-black px-10 py-4 rounded-xl text-lg font-bold hover:bg-yellow-500 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center"
+              >
                 Get Started Today
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="group border-2 border-white text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-blue-900 transition-all duration-300 flex items-center">
+              <button 
+                onClick={() => handleRestrictedAccess()}
+                className="group border-2 border-white text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-blue-900 transition-all duration-300 flex items-center"
+              >
                 Learn More
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
@@ -190,7 +196,7 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
                 </div>
 
                 <button className="w-full bg-blue-500 text-white py-3 px-6 rounded-xl hover:bg-blue-600 transition-colors font-semibold">
-                  Join as Service Seeker
+                  <span onClick={handleRestrictedAccess}>Join as Consumer</span>
                 </button>
               </div>
             </div>
@@ -226,7 +232,7 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
                 </div>
 
                 <button className="w-full bg-yellow-500 text-white py-3 px-6 rounded-xl hover:bg-yellow-600 transition-colors font-semibold">
-                  Become Vehicle Renter
+                  <span onClick={handleRestrictedAccess}>Become Vehicle Owner</span>
                 </button>
               </div>
             </div>
@@ -262,7 +268,7 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
                 </div>
 
                 <button className="w-full bg-green-500 text-white py-3 px-6 rounded-xl hover:bg-green-600 transition-colors font-semibold">
-                  Become Supplier
+                  <span onClick={handleRestrictedAccess}>Become Supplier</span>
                 </button>
               </div>
             </div>
@@ -429,10 +435,16 @@ export const Hero: React.FC<HeroProps> = ({ onServiceSelect }) => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button className="bg-yellow-400 text-black px-12 py-4 rounded-xl text-lg font-bold hover:bg-yellow-500 transition-colors shadow-lg">
+            <button 
+              onClick={() => handleRestrictedAccess()}
+              className="bg-yellow-400 text-black px-12 py-4 rounded-xl text-lg font-bold hover:bg-yellow-500 transition-colors shadow-lg"
+            >
               Sign Up Now
             </button>
-            <button className="border-2 border-white text-white px-12 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-blue-900 transition-colors">
+            <button 
+              onClick={() => handleRestrictedAccess()}
+              className="border-2 border-white text-white px-12 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-blue-900 transition-colors"
+            >
               Login
             </button>
           </div>

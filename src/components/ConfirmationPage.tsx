@@ -52,15 +52,15 @@ export const ConfirmationPage: React.FC<ConfirmationPageProps> = ({ onAction, re
                 <>
                   <div className="flex items-center text-gray-700">
                     <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    Complete your business verification
+                  </div>
+                  <div className="flex items-center text-gray-700">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
                     Add your vehicles to the platform
                   </div>
                   <div className="flex items-center text-gray-700">
                     <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
-                    Set your rental rates
-                  </div>
-                  <div className="flex items-center text-gray-700">
-                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
-                    Start earning from rentals
+                    Start receiving rental requests
                   </div>
                 </>
               )}
@@ -68,15 +68,15 @@ export const ConfirmationPage: React.FC<ConfirmationPageProps> = ({ onAction, re
                 <>
                   <div className="flex items-center text-gray-700">
                     <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
+                    Complete your business verification
+                  </div>
+                  <div className="flex items-center text-gray-700">
+                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
                     List your construction materials
                   </div>
                   <div className="flex items-center text-gray-700">
                     <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
-                    Set your prices and delivery terms
-                  </div>
-                  <div className="flex items-center text-gray-700">
-                    <CheckCircle className="w-5 h-5 text-green-500 mr-3" />
-                    Connect with contractors
+                    Start receiving material orders
                   </div>
                 </>
               )}
@@ -95,7 +95,7 @@ export const ConfirmationPage: React.FC<ConfirmationPageProps> = ({ onAction, re
               onClick={() => onAction('dashboard')}
               className="flex items-center justify-center bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 rounded-xl hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"
             >
-              Get Started
+              {registrationData?.role === 'consumer' ? 'Browse Services' : 'Go to Dashboard'}
               <ArrowRight className="ml-2 w-5 h-5" />
             </button>
           </div>
